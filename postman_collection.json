@@ -1,0 +1,168 @@
+{
+    "info": {
+        "name": "Laravel Webhook SMS App",
+        "description": "API collection for testing the Laravel Webhook SMS application",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Webhook - Booking Confirmed",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    },
+                    {
+                        "key": "X-Webhook-Secret",
+                        "value": "{{webhook_secret}}",
+                        "type": "text",
+                        "description": "Replace with your actual webhook secret from the admin panel"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"message_id\": \"booking_confirmed\",\n  \"mobile\": \"07440000000\",\n  \"customer_name\": \"John Smith\",\n  \"booking_id\": \"BK789012\"\n}"
+                },
+                "url": {
+                    "raw": "{{base_url}}/api/webhook",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "webhook"]
+                },
+                "description": "Test webhook with booking confirmation template"
+            },
+            "response": []
+        },
+        {
+            "name": "Webhook - Driver En Route",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    },
+                    {
+                        "key": "X-Webhook-Secret",
+                        "value": "{{webhook_secret}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"message_id\": \"enroute\",\n  \"mobile\": \"07440000000\",\n  \"customer_name\": \"Jane Doe\",\n  \"tracking_link\": \"https://example.com/track/abc123\"\n}"
+                },
+                "url": {
+                    "raw": "{{base_url}}/api/webhook",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "webhook"]
+                },
+                "description": "Test webhook with en route template"
+            },
+            "response": []
+        },
+        {
+            "name": "Webhook - Service Completed",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    },
+                    {
+                        "key": "X-Webhook-Secret",
+                        "value": "{{webhook_secret}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"message_id\": \"completed\",\n  \"mobile\": \"07440000000\",\n  \"customer_name\": \"Bob Johnson\",\n  \"booking_id\": \"BK456789\"\n}"
+                },
+                "url": {
+                    "raw": "{{base_url}}/api/webhook",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "webhook"]
+                },
+                "description": "Test webhook with completion template"
+            },
+            "response": []
+        },
+        {
+            "name": "Webhook - Invalid Secret (Should Fail)",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    },
+                    {
+                        "key": "X-Webhook-Secret",
+                        "value": "invalid-secret",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"message_id\": \"booking_confirmed\",\n  \"mobile\": \"07440000000\",\n  \"customer_name\": \"Test User\"\n}"
+                },
+                "url": {
+                    "raw": "{{base_url}}/api/webhook",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "webhook"]
+                },
+                "description": "Test webhook authentication - should return 403 Forbidden"
+            },
+            "response": []
+        },
+        {
+            "name": "Webhook - Missing Fields (Should Fail)",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    },
+                    {
+                        "key": "X-Webhook-Secret",
+                        "value": "{{webhook_secret}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"customer_name\": \"Test User\"\n}"
+                },
+                "url": {
+                    "raw": "{{base_url}}/api/webhook",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "webhook"]
+                },
+                "description": "Test webhook with missing required fields - should return 400 Bad Request"
+            },
+            "response": []
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:8000",
+            "type": "string"
+        },
+        {
+            "key": "webhook_secret",
+            "value": "your-webhook-secret-here",
+            "type": "string",
+            "description": "Get this from the admin panel Configuration page"
+        }
+    ]
+}

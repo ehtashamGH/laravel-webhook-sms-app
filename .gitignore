@@ -1,0 +1,24 @@
+# Environment
+.env
+
+# Laravel
+/vendor/
+/node_modules/
+/public/build/
+/public/hot/
+/storage/*.key
+/bootstrap/cache/*.php
+
+# Logs
+*.log
+
+# Database
+database/database.sqlite
+
+# IDE
+/.vscode/
+/.idea/
+
+# OS
+.DS_Store
+Thumbs.db
